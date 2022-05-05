@@ -1,2 +1,2 @@
-all: assignment.cpp
-	nvcc assignment.cpp -std=c++11 -lOpenCL -o assignment.exe
+all: project.cu
+	nvcc project.cu -std=c++11 -lcudart -lcuda -lOpenCL -o project
