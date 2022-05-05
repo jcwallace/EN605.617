@@ -9,6 +9,22 @@ void generateMatrix(float* mat, int l, int w){
     }
 }
 
+double timer(void){
+    struct timeval t;
+    struct timezone tz;
+    gettimeofday(&t,&tz);
+    double etime = (double)t.tv_sec + 1.0e-6*((double)t.tv_usec);
+    return etime;
+}
+
+double wtime(profiler timer){
+    return timer.t;
+}
+
+double gflops(profiler timer){
+    return ((double)timer.kflops/(1000.0*1000.0))/(timer.t);
+}
+
 int main(int argc, char** argv)
 {
     double peak = GPU_CLOCK * GPU_CORES * GPU_MOD;

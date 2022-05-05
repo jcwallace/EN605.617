@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <chrono>
+#include <math.h>
+#include <time.h>
+#include <sys/time.h>
 #include <cuda.h>
 
 
