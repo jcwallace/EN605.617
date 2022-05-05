@@ -29,13 +29,13 @@ int main(int argc, char** argv)
 {
     double peak = GPU_CLOCK * GPU_CORES * GPU_MOD;
 
-    printf("##    cuBLAS on '%s', peak: %.1lf GFLOPS\n", GPU_NAME, peak);
+    printf("## GPU '%s', peak: %.1lf GFLOPS\n", GPU_NAME, peak);
 
     for (int size=MINSIZE; size<=MAXSIZE; size=size*2) {
         // Set the performance counters to zero
-        for (int t=0; t<NUM_TIMERS; t++) {
-            timers[t].t = 0.0;
-            timers[t].kflops = 0;
+        for (int itr=0; itr<NUM_TIMERS; itr++) {
+            timers[itr].t = 0.0;
+            timers[itr].kflops = 0;
         }
 
         // Set the matrices to be squared (change this to get rectangular matrices)
