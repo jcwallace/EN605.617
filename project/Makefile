@@ -19,5 +19,5 @@ run:
 	./$(BIN)
         
 clean:
-    rm -f $(BIN)
-    rm -f *.o
+	rm -f $(BIN)
+	rm -f *.o
