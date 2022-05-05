@@ -9,7 +9,7 @@
 #define NUM_RUNS 4
 
 // Squared matrices are tested within a certain range (e.g. 1024x1024, 2048x2048, 4096x4096)
-#define MINSIZE (1024)
+#define MINSIZE (256)
 #define MAXSIZE (4*1024)
 
 // Set the alpha and beta values for the cuBLAS and clBlas libraries. Note that the myGEMM kernels
@@ -20,7 +20,7 @@
 #define GPU_NAME "Tesla K80"
 #define GPU_CLOCK 0.823 // Core clock in GHz
 #define GPU_CORES 4992 // Total number of CUDA cores
-//#define GPU_MOD 2 // Fused multiply-add
+#define GPU_MOD 2 // Fused multiply-add
 
 typedef struct{
 	double t;
