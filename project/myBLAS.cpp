@@ -50,27 +50,27 @@ void myblasCL(float* A, float* B, float* C,
     err = clBuildProgram(program, 0, NULL, NULL, NULL, NULL);
 
     // Check for compilation errors
-    // size_t logSize;
-    // err = clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, 0, NULL, &logSize);
-    // checkError(err,__LINE__);
-    // char* messages = (char*)malloc((1+logSize)*sizeof(char));
-    // err = clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, logSize, messages, NULL);
-    // checkError(err,__LINE__);
-    // messages[logSize] = '\0';
-    // //if (logSize > 10) { printf("## Compiler message: %s\n", messages); }
-    // free(messages);
+    size_t logSize;
+    err = clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, 0, NULL, &logSize);
+    checkError(err,__LINE__);
+    char* messages = (char*)malloc((1+logSize)*sizeof(char));
+    err = clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, logSize, messages, NULL);
+    checkError(err,__LINE__);
+    messages[logSize] = '\0';
+    //if (logSize > 10) { printf("## Compiler message: %s\n", messages); }
+    free(messages);
 
     // Retrieve the PTX code from the OpenCL compiler and output it to disk
-    // size_t binSize;
-    // err = clGetProgramInfo(program, CL_PROGRAM_BINARY_SIZES, sizeof(size_t), &binSize, NULL);
-    // checkError(err,__LINE__);
-    // unsigned char *bin = (unsigned char *)malloc(binSize);
-    // err = clGetProgramInfo(program, CL_PROGRAM_BINARIES, sizeof(unsigned char *), &bin, NULL);
-    // checkError(err,__LINE__);
-    // FILE* file = fopen(CL_PTX_FILE, "wb");
-    // fwrite(bin, sizeof(char), binSize, file);
-    // fclose(file);
-    // free(bin);
+    size_t binSize;
+    err = clGetProgramInfo(program, CL_PROGRAM_BINARY_SIZES, sizeof(size_t), &binSize, NULL);
+    checkError(err,__LINE__);
+    unsigned char *bin = (unsigned char *)malloc(binSize);
+    err = clGetProgramInfo(program, CL_PROGRAM_BINARIES, sizeof(unsigned char *), &bin, NULL);
+    checkError(err,__LINE__);
+    FILE* file = fopen(CL_PTX_FILE, "wb");
+    fwrite(bin, sizeof(char), binSize, file);
+    fclose(file);
+    free(bin);
 
     // Prepare OpenCL memory objects
     cl_mem bufA    = clCreateBuffer(context, CL_MEM_READ_ONLY,  M*K*sizeof(*A), NULL, &err);

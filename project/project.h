@@ -1,5 +1,6 @@
 // Common Includes
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <chrono>
 #include <math.h>
@@ -45,7 +46,7 @@ double timer(void);
 double wtime(profiler timer);
 double gflops(profiler timer);
 
-char* readKernel(const char* filename, long* _size)
+char* readKernel(const char* filename, long* _size);
 
 void cublas(float* A, float* B, float* C,
                int K, int M, int N,
