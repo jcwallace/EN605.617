@@ -23,7 +23,7 @@ __device__ int get_global_id(int x) {
 
 #include "kernels.cl"
 
-void myblas(float* A, float* B, float* C,
+void myblasCUDA(float* A, float* B, float* C,
               int K, int M, int N,
               int timerID) {
 
