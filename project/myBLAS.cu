@@ -1,4 +1,4 @@
-#include <project.h>
+#include "project.h"
 
 // Replace the OpenCL keywords with CUDA equivalent
 #define __kernel __placeholder__
@@ -21,7 +21,7 @@ __device__ int get_global_id(int x) {
     return (x == 0) ? blockIdx.x*blockDim.x + threadIdx.x : blockIdx.y*blockDim.y + threadIdx.y;
 }
 
-#include "kernels.cl"
+#include "kernel.cl"
 
 void myblasCUDA(float* A, float* B, float* C,
               int K, int M, int N,

@@ -69,6 +69,8 @@ int main(int argc, char** argv)
         const int m = size;
         const int n = size;
 
+         printf("## --- %dx%dx%d ---\n", k, m, n);
+
         float* A = (float*)malloc(m*k*sizeof(float*));
         float* B = (float*)malloc(k*n*sizeof(float*));
         float* C = (float*)malloc(m*n*sizeof(float*));
@@ -79,15 +81,14 @@ int main(int argc, char** argv)
         // Benchmark to compare results to
         cublas(A,B,goldC,k,m,n, NUM_TIMERS-1);
                                         
-        for(int c=0; c<=1; c++){
+        for(int c=0; c<=2; c++){
             char name[100];
             switch(c){
                 case 0: sprintf(name,"cuBLAS"); cublas(A,B,C,k,m,n,c); break;
-                case 1: sprintf(name,"myBLAS_cuda"); myblasCUDA(A,B,C,k,m,n,c); break;
+                case 1: sprintf(name,"myBLAS_cu"); myblasCUDA(A,B,C,k,m,n,c); break;
+                case 2: sprintf(name,"myBLAS_cl"); myblasCL(A,B,C,k,m,n,c); break;
             }
             
-            
-
             // Print the results to screen
             double seconds = wtime(timers[c]);
             double performance = gflops(timers[c]);
