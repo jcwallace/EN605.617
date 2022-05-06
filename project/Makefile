@@ -4,6 +4,7 @@ NVCC = nvcc
 CXXFLAGS += -O3 -Wall -std=c++11
 NVFLAGS += -03 -arch=sm_35 -Xcompiler -Wall
 
+INCLUDES = -I/usr/include/nvidia-396/cuda/
 LDFLAGS = -lOpenCL -lcuda -lcudart -lcublas
 
 CPPSOURCES = project.cpp
@@ -16,13 +17,13 @@ BIN = gemm
 all: build run
 
 build: $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) $(LDFLAGS) -o $(BIN)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(OBJS) $(LDFLAGS) -o $(BIN)
 
 %.cpp.o: %.cpp *.h
-	$(CXX) -c $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $(INCLUDES) $< -o $@
 
 %.o: %.cu *.h
-	$(NVCC) -c $(NVFLAGS) $< -o $@
+	$(NVCC) -c $(NVFLAGS) $(INCLUDES) $< -o $@
         
 run:
 	./$(BIN)
