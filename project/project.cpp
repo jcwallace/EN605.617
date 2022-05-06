@@ -77,12 +77,12 @@ int main(int argc, char** argv)
         generateMatrix(B,k,n);
 
         // Benchmark to compare results to
-        libcublas(A,B,goldC,k,m,n, NUM_TIMERS-1);
+        cublas(A,B,goldC,k,m,n, NUM_TIMERS-1);
                                         
         for(int c=0; c<=1; c++){
             char name[100];
             switch(c){
-                case 0: sprintf(name,"cuBLAS"); libcublas(A,B,C,k,m,n,c); break;
+                case 0: sprintf(name,"cuBLAS"); cublas(A,B,C,k,m,n,c); break;
                 case 1: sprintf(name,"myBLAS_cuda"); myblasCUDA(A,B,C,k,m,n,c); break;
             }
             
