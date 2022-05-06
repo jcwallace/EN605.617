@@ -2,7 +2,7 @@
 
 #include <cublas_v2.h>
 
-void libcublas(float* A, float* B, float* C,
+void cublas(float* A, float* B, float* C,
                int K, int M, int N,
                int timerID) {
 

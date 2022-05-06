@@ -76,20 +76,25 @@ int main(int argc, char** argv)
         generateMatrix(A,m,k);
         generateMatrix(B,k,n);
 
+        // Benchmark to compare results to
         libcublas(A,B,goldC,k,m,n, NUM_TIMERS-1);
                                         
-        char name[100];
-        sprintf(name,"cuBLAS");
-                                        
-        libcublas(A,B,C,k,m,n,0);
-                                        
-        // Compare the result to the 'golden' reference output in terms of the L2-norm
-        double L2norm = 0.0;
-        for (int i=0; i<m*n; i++) {
-            double val = C[i] - goldC[i];
-            L2norm += val*val;
+        for(int c=0; c<=1; c++){
+            char name[100];
+            switch(c){
+                case 0: sprintf(name,"cuBLAS"); break;
+                case 1: sprintf(name,"myBLAS_cuda"); break;
+            }
+            
+            libcublas(A,B,C,k,m,n,c);
+
+            // Print the results to screen
+            double seconds = wtime(timers[c]);
+            double performance = gflops(timers[c]);
+            double fraction = 100.0 * performance / peak;
+            printf("## [%9s] %6.3lf s --> %6.1lf GFLOPS (%2.0lf%%)\n",
+                    name, seconds, performance, fraction);
         }
-        L2norm = sqrt(L2norm);
 
         // Print the results to screen
         double seconds = wtime(timers[0]);
