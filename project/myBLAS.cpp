@@ -60,18 +60,6 @@ void myblasCL(float* A, float* B, float* C,
     //if (logSize > 10) { printf("## Compiler message: %s\n", messages); }
     free(messages);
 
-    // Retrieve the PTX code from the OpenCL compiler and output it to disk
-    size_t binSize;
-    err = clGetProgramInfo(program, CL_PROGRAM_BINARY_SIZES, sizeof(size_t), &binSize, NULL);
-    checkError(err,__LINE__);
-    unsigned char *bin = (unsigned char *)malloc(binSize);
-    err = clGetProgramInfo(program, CL_PROGRAM_BINARIES, sizeof(unsigned char *), &bin, NULL);
-    checkError(err,__LINE__);
-    FILE* file = fopen(CL_PTX_FILE, "wb");
-    fwrite(bin, sizeof(char), binSize, file);
-    fclose(file);
-    free(bin);
-
     // Prepare OpenCL memory objects
     cl_mem bufA    = clCreateBuffer(context, CL_MEM_READ_ONLY,  M*K*sizeof(*A), NULL, &err);
     cl_mem bufB    = clCreateBuffer(context, CL_MEM_READ_ONLY,  K*N*sizeof(*B), NULL, &err);
