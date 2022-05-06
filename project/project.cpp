@@ -82,11 +82,11 @@ int main(int argc, char** argv)
         for(int c=0; c<=1; c++){
             char name[100];
             switch(c){
-                case 0: sprintf(name,"cuBLAS"); break;
-                case 1: sprintf(name,"myBLAS_cuda"); break;
+                case 0: sprintf(name,"cuBLAS"); libcublas(A,B,C,k,m,n,c); break;
+                case 1: sprintf(name,"myBLAS_cuda"); myblasCUDA(A,B,C,k,m,n,c); break;
             }
             
-            libcublas(A,B,C,k,m,n,c);
+            
 
             // Print the results to screen
             double seconds = wtime(timers[c]);
@@ -95,13 +95,6 @@ int main(int argc, char** argv)
             printf("## [%9s] %6.3lf s --> %6.1lf GFLOPS (%2.0lf%%)\n",
                     name, seconds, performance, fraction);
         }
-
-        // Print the results to screen
-        double seconds = wtime(timers[0]);
-        double performance = gflops(timers[0]);
-        double fraction = 100.0 * performance / peak;
-        printf("## [%9s] %6.3lf s --> %6.1lf GFLOPS (%2.0lf%%), L2 norm: %.2e\n",
-                name, seconds, performance, fraction, L2norm);
 
         free(A);
         free(B);
