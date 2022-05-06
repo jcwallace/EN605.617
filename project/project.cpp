@@ -92,8 +92,8 @@ int main(int argc, char** argv)
         L2norm = sqrt(L2norm);
 
         // Print the results to screen
-        double seconds = wtime(timers[c]);
-        double performance = gflops(timers[c]);
+        double seconds = wtime(timers[0]);
+        double performance = gflops(timers[0]);
         double fraction = 100.0 * performance / peak;
         printf("## [%9s] %6.3lf s --> %6.1lf GFLOPS (%2.0lf%%), L2 norm: %.2e\n",
                 name, seconds, performance, fraction, L2norm);

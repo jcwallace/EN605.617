@@ -1,19 +1,28 @@
+CXX = g++
 NVCC = nvcc
 
+CXXFLAGS += -O3 -Wall -std=c++11
 NVFLAGS += -03 -arch=sm_35 -Xcompiler -Wall
 
-LDFLAGS += -lOpenCL -lcuda -lcudart
+LDFLAGS = -lOpenCL -lcuda -lcudart -lcublas
 
-SOURCES = project.cu
+CPPSOURCES = project.cpp
+GPUSOURCES = cublas.cu
 
-OBJS = $(SOURCES:%.cpp=%.o)
-
+OBJS = $(CPPSOURCES:%.cpp=%.cpp.o)
+OBJS += $(GPUSOURCES:%.cu=%.cu.o)
 BIN = gemm
 
 all: build run
 
-build: $(BIN)
-	$(NVCC) $(SOURCES) -std=c++11 $(LDFLAGS) -o $(BIN)
+build: $(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) $(LDFLAGS) -o $(BIN)
+
+%.cpp.o: %.cpp *.h
+	$(CXX) -c $(CXXFLAGS) $< -o $@
+
+%.o: %.cu *.h
+	$(NVCC) -c $(NVFLAGS) $< -o $@
         
 run:
 	./$(BIN)
