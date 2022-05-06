@@ -4,7 +4,7 @@ NVCC = nvcc
 CXXFLAGS += -O3 -Wall -std=c++11
 NVFLAGS += -std=c++11 -O3 -arch=sm_35 -Xcompiler -Wall
 
-INCLUDES = -I/usr/include/nvidia-396/cuda/
+INCLUDES = -I/usr/include/nvidia-396/
 LDFLAGS = -lOpenCL -lcuda -lcudart -lcublas
 
 CPPSOURCES = project.cpp myBLAS.cpp

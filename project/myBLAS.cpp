@@ -36,21 +36,18 @@ void myblasCL(float* A, float* B, float* C,
 
     // Read the kernel file from disk
     long sizeHeader, sizeSource;
-    char* header = readKernelFile(CL_INCLUDE_FILE, &sizeHeader);
-    char* source = readKernelFile(CL_KERNEL_FILE, &sizeSource);
+    char* source = readKernel(CL_KERNEL_FILE, &sizeSource);
     long size = 2 + sizeHeader + sizeSource;
     char* code = (char*)malloc(size*sizeof(char));
     for (int c=0; c<size; c++) { code[c] = '\0'; }
-    strcat(code, header);
     strcat(code, source);
     const char* constCode = code;
-    free(header);
     free(source);
 
     // Compile the kernel file
     program = clCreateProgramWithSource(context, 1, &constCode, NULL, &err);
     checkError(err,__LINE__);
-    err = clBuildProgram(program, 0, NULL, COMPILER_OPTIONS, NULL, NULL);
+    err = clBuildProgram(program, 0, NULL, NULL, NULL, NULL);
 
     // Check for compilation errors
     // size_t logSize;
