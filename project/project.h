@@ -30,11 +30,6 @@
 #define GPU_CORES 4992 // Total number of CUDA cores
 #define GPU_MOD 2 // Fused multiply-add
 
-// OpenCL settings
-#define MAX_NUM_DEVICES 16
-#define MAX_DEVICE_NAME 1024
-#define CURRENT_DEVICE 0
-
 typedef struct{
 	double t;
 	int long long kflops;
@@ -50,10 +45,6 @@ double wtime(profiler timer);
 double gflops(profiler timer);
 
 void cublas(float* A, float* B, float* C,
-               int K, int M, int N,
-               int timerID);
-
-void clblas(float* A, float* B, float* C,
                int K, int M, int N,
                int timerID);
 

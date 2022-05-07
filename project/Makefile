@@ -1,15 +1,11 @@
 CXX = g++
 NVCC = nvcc
 
-CLBLAS_DIR = ./clBLAS
-
 CXXFLAGS += -O3 -Wall -std=c++11
 NVFLAGS += -std=c++11 -O3 -arch=sm_35 -Xcompiler -Wall
 
 INCLUDES += -I/usr/include/nvidia-396/
-INCLUDES += -I$(CLBLAS_DIR)/include
-LDFLAGS += -L$(CLBLAS_DIR)/lib64
-LDFLAGS += -lOpenCL -lcuda -lcudart -lcublas -lclBLAS
+LDFLAGS += -lcuda -lcudart -lcublas
 
 CPPSOURCES = project.cpp clBLAS.cpp
 GPUSOURCES = cuBLAS.cu myBLAS.cu
