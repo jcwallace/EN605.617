@@ -45,7 +45,7 @@ int main(int argc, char** argv)
         const int m = size;
         const int n = size;
 
-         printf("## --- %dx%dx%d ---\n", k, m, n);
+        printf("## --- %dx%dx%d ---\n", k, m, n);
 
         float* A = (float*)malloc(m*k*sizeof(float*));
         float* B = (float*)malloc(k*n*sizeof(float*));
@@ -53,12 +53,12 @@ int main(int argc, char** argv)
         generateMatrix(A,m,k);
         generateMatrix(B,k,n);
                                         
-        for(int c=0; c<=1; c++){
+        for(int c=0; c<=2; c++){
             char name[100];
             switch(c){
                 case 0: sprintf(name,"cuBLAS"); cublas(A,B,C,k,m,n,c); break;
                 case 1: sprintf(name,"Naive"); myblas1(A,B,C,k,m,n,c); break;
-                // case 2: sprintf(name,"Tiling"); myblas2(A,B,C,k,m,n,c); break;
+                 case 2: sprintf(name,"Tiling"); myblas2(A,B,C,k,m,n,c); break;
             }
             
             // Print the results to screen
