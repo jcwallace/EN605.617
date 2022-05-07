@@ -7,7 +7,7 @@ NVFLAGS += -std=c++11 -O3 -arch=sm_35 -Xcompiler -Wall
 INCLUDES += -I/usr/include/nvidia-396/
 LDFLAGS += -lcuda -lcudart -lcublas
 
-CPPSOURCES = project.cpp clBLAS.cpp
+CPPSOURCES = project.cpp
 GPUSOURCES = cuBLAS.cu myBLAS.cu
 
 OBJS = $(CPPSOURCES:%.cpp=%.cpp.o)
