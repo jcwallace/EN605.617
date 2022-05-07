@@ -8,7 +8,8 @@ NVFLAGS += -std=c++11 -O3 -arch=sm_35 -Xcompiler -Wall
 
 INCLUDES = -I/usr/include/nvidia-396/
 INCLUDES += -I$(CLBLAS_DIR)/include
-LDFLAGS = -lOpenCL -lcuda -lcudart -lcublas -L$(CLBLAS_DIR)/lib64
+LDFLAGS = -L$(CLBLAS_DIR)/lib64
+LDFLAGS += -lOpenCL -lcuda -lcudart -lcublas
 
 CPPSOURCES = project.cpp clBLAS.cpp
 GPUSOURCES = cuBLAS.cu myBLAS.cu
@@ -23,7 +24,7 @@ build: $(OBJS)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(OBJS) $(LDFLAGS) -o $(BIN)
 
 %.cpp.o: %.cpp *.h
-	$(CXX) -c $(CXXFLAGS) $(INCLUDES) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $(INCLUDES) $(LDFLAGS) $< -o $@
 
 %.cu.o: %.cu *.h
 	$(NVCC) -c $(NVFLAGS) $(INCLUDES) $< -o $@

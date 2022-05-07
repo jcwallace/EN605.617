@@ -8,7 +8,6 @@
 #include <sys/time.h>
 #include <cuda/cuda.h>
 
-
 // Constants
 #define NUM_RUNS 4
 
@@ -30,6 +29,11 @@
 #define GPU_CLOCK 0.823 // Core clock in GHz
 #define GPU_CORES 4992 // Total number of CUDA cores
 #define GPU_MOD 2 // Fused multiply-add
+
+// OpenCL settings
+#define MAX_NUM_DEVICES 16
+#define MAX_DEVICE_NAME 1024
+#define CURRENT_DEVICE 0
 
 typedef struct{
 	double t;
