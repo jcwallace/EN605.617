@@ -53,12 +53,12 @@ int main(int argc, char** argv)
         generateMatrix(A,m,k);
         generateMatrix(B,k,n);
                                         
-        for(int c=0; c<=2; c++){
+        for(int c=0; c<=1; c++){
             char name[100];
             switch(c){
                 case 0: sprintf(name,"cuBLAS"); cublas(A,B,C,k,m,n,c); break;
                 case 1: sprintf(name,"Naive"); myblas1(A,B,C,k,m,n,c); break;
-                case 2: sprintf(name,"Tiling"); myblas2(A,B,C,k,m,n,c); break;
+                // case 2: sprintf(name,"Tiling"); myblas2(A,B,C,k,m,n,c); break;
             }
             
             // Print the results to screen

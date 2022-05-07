@@ -100,7 +100,7 @@ void myblas2(float* A, float* B, float* C,
 
     // Configure the thread/threadblock dimensions of the myGEMM kernel
     dim3 blocks(M/TS, N/TS);
-    dim3 threads(TS, TS);
+    dim3 threads(TS, TS/WPT);
 
     // Start the timed loop
     double startTime = timer();
