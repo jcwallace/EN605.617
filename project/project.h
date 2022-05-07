@@ -45,9 +45,11 @@ double timer(void);
 double wtime(profiler timer);
 double gflops(profiler timer);
 
-char* readKernel(const char* filename, long* _size);
-
 void cublas(float* A, float* B, float* C,
+               int K, int M, int N,
+               int timerID);
+
+void clblas(float* A, float* B, float* C,
                int K, int M, int N,
                int timerID);
 
