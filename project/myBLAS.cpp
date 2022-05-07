@@ -35,9 +35,9 @@ void myblasCL(float* A, float* B, float* C,
     checkError(err,__LINE__);
 
     // Read the kernel file from disk
-    long sizeHeader, sizeSource;
+    long sizeSource;
     char* source = readKernel(CL_KERNEL_FILE, &sizeSource);
-    long size = 2 + sizeHeader + sizeSource;
+    long size = 2 + sizeSource;
     char* code = (char*)malloc(size*sizeof(char));
     for (int c=0; c<size; c++) { code[c] = '\0'; }
     strcat(code, source);
@@ -102,6 +102,7 @@ void myblasCL(float* A, float* B, float* C,
         checkError(err,__LINE__);
         err = clWaitForEvents(1, &event);
     }
+
 
     // End the timed loop
     timers[timerID].t += (timer() - startTime) / (double)NUM_RUNS;
