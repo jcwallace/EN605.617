@@ -11,7 +11,11 @@
 
 // Constants
 #define NUM_RUNS 4
+
+// Kernel Parameters
 #define TS 32
+#define WPT 8                        // The amount of work-per-thread, i.e. the thread-coarsening factor
+#define RTS (TS/WPT)                 // The reduced tile-size in one dimension
 
 // Squared matrices are tested within a certain range (e.g. 1024x1024, 2048x2048, 4096x4096)
 #define MINSIZE (256)
@@ -26,11 +30,6 @@
 #define GPU_CLOCK 0.823 // Core clock in GHz
 #define GPU_CORES 4992 // Total number of CUDA cores
 #define GPU_MOD 2 // Fused multiply-add
-
-// OpenCL settings
-#define MAX_NUM_DEVICES 16
-#define MAX_DEVICE_NAME 1024
-#define CURRENT_DEVICE 0
 
 typedef struct{
 	double t;
@@ -52,11 +51,11 @@ void cublas(float* A, float* B, float* C,
                int K, int M, int N,
                int timerID);
 
-void myblasCL(float* A, float* B, float* C,
-               int K, int M, int N,
-               int timerID);
+void myblas1(float* A, float* B, float* C,
+              int K, int M, int N,
+              int timerID);
 
-void myblasCUDA(float* A, float* B, float* C,
+void myblas2(float* A, float* B, float* C,
               int K, int M, int N,
               int timerID);
 

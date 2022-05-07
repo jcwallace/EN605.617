@@ -27,30 +27,6 @@ double gflops(profiler timer){
     return ((double)timer.kflops/(1000.0*1000.0))/(timer.t);
 }
 
-char* readKernel(const char* filename, long* _size){
-    // Open the file
-    FILE* file = fopen(filename, "r");
-    if (!file) {
-        printf("-- Error opening file %s\n", filename);
-        exit(1);
-    }
-
-    // Get its size
-    fseek(file, 0, SEEK_END);
-    long size = ftell(file);
-    rewind(file);
-
-    // Read the kernel code as a string
-    char* source = (char *)malloc((size+1)*sizeof(char));
-    fread(source, 1, size*sizeof(char), file);
-    source[size] = '\0';
-    fclose(file);
-
-    // Save the size and return the source string
-    *_size = (size+1);
-    return source;
-}
-
 int main(int argc, char** argv)
 {
     double peak = GPU_CLOCK * GPU_CORES * GPU_MOD;
@@ -74,19 +50,15 @@ int main(int argc, char** argv)
         float* A = (float*)malloc(m*k*sizeof(float*));
         float* B = (float*)malloc(k*n*sizeof(float*));
         float* C = (float*)malloc(m*n*sizeof(float*));
-        float* goldC = (float*)malloc(MAXSIZE*MAXSIZE*sizeof(float*));
         generateMatrix(A,m,k);
         generateMatrix(B,k,n);
-
-        // Benchmark to compare results to
-        cublas(A,B,goldC,k,m,n, NUM_TIMERS-1);
                                         
         for(int c=0; c<=2; c++){
             char name[100];
             switch(c){
                 case 0: sprintf(name,"cuBLAS"); cublas(A,B,C,k,m,n,c); break;
-                case 1: sprintf(name,"myBLAS_cu"); myblasCUDA(A,B,C,k,m,n,c); break;
-                case 2: sprintf(name,"myBLAS_cl"); myblasCL(A,B,C,k,m,n,c); break;
+                case 1: sprintf(name,"Naive"); myblas1(A,B,C,k,m,n,c); break;
+                case 2: sprintf(name,"Tiling"); myblas2(A,B,C,k,m,n,c); break;
             }
             
             // Print the results to screen
@@ -100,7 +72,6 @@ int main(int argc, char** argv)
         free(A);
         free(B);
         free(C);
-        free(goldC);
     }
 
     return 0;
